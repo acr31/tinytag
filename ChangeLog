@@ -1,0 +1,3 @@
+08-Aug-2005:
+	Initial check-in to subversion.  Fully functional tag reader
+with test harness for generating tag images and processing them.

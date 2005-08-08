@@ -1,0 +1,46 @@
+Tinytag
+-------
+
+Tinytag is a simple tag reader designed for embedded applications such
+as mobile phones.  It is capable of reading high capacity square tags
+at high framerate.  Tinytag is a barcode reader - it will read a
+binary code from the tag but cannot provide 3D position or pose
+information.  Users requiring 3D support should see the Cantag
+project for more details.
+
+* It is written in ANSI C and contains no floating point operations
+(fixed point is used where required).
+
+* Multiple tag sizes are supported (see the EDGE_CELLS parameters in
+options.h)
+
+* Use of CRC or simple checksum (see USE_CHECKSUM in options.h).  CRC
+polynomial is selected automatically at compile time to be most
+suitable for the chosen payload size
+
+
+Compilation 
+-----------
+
+1) Edit the options for your tag design in options.h
+2) Edit the Makefile if you wish to enable ImageMagick support for loading and saving images.  If you don't choose to use ImageMagick support then Tinytag is limited to using ascii, grey-scale PNM images.
+3) Run make
+
+Usage
+-----
+
+codegen - this program will generate an image of a tag and save it to disk.  The data to be coded should be given in hexadecimal:
+
+	./codegen 0123456789ABCDEF output.pnm
+
+imagetest - this program will load an image from disk, search for a tag and output the decoded tag data:
+
+	./imagetest output.pnm
+
+codetest - integrated test harness.  This program will generate a tag image in memory and then attempt to recognise it.  The decoded data are then compared to the input data to ensure no errors have occurred:
+
+	./codetest 0123456789ABCDEF
+
+
+Andrew Rice
+acr31@cam.ac.uk
