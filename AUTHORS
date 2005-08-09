@@ -1,2 +1,5 @@
 Andrew Rice <acr31@cam.ac.uk>
+	- initial version of TinyTag, all algorithms and design
+
 Richard Sharp <richard.sharp@intel.com>
+	- fixed point support, bug fixes to interpolation and contour-follower algorithms (recognise.c)
