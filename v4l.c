@@ -82,6 +82,11 @@ struct v4l_handle* v4l_open(const char* videodev) {
   }
   handle->working_image = (unsigned char*)malloc(IMAGE_BYTES_PER_LINE*IMAGE_HEIGHT);
 
+  if (ioctl(handle->filehandle,VIDIOCGPICT,&p) < 0) {
+    v4l_close(handle);
+    return 0;
+  }
+
   p.palette = VIDEO_PALETTE_YUV420P;
   p.depth = 8;
   if (ioctl(handle->filehandle,VIDIOCSPICT,&p) < 0) {
