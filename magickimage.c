@@ -27,7 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <magick/magick_wand.h>
+#include <wand/magick_wand.h>
 
 #include "image.h"
 #include "options.h"
