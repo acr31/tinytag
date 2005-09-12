@@ -23,7 +23,7 @@ Compilation
 -----------
 
 1) Edit the options for your tag design in options.h
-2) Edit the Makefile if you wish to enable ImageMagick support for loading and saving images.  If you don't choose to use ImageMagick support then Tinytag is limited to using ascii, grey-scale PNM images.
+2) Edit the Makefile if you wish to enable ImageMagick support for loading and saving images.  If you don't choose to use ImageMagick support then Tinytag is limited to using ascii, grey-scale PNM images.  Also check which targets you want to build - see the list of programs below.  Note that for Video4Linux you must hard code the image size in options.h for the camera that you are using.
 3) Run make
 
 Usage
@@ -41,6 +41,9 @@ codetest - integrated test harness.  This program will generate a tag image in m
 
 	./codetest 0123456789ABCDEF
 
+v4ltest - Video4Linux test program.  This program will open the specified Video4Linux device (currently only cameras supporting YUV palettes devices are supported) and recognise images from it:
+
+        ./v4ltest /dev/video0
 
 Andrew Rice
 acr31@cam.ac.uk
