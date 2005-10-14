@@ -49,7 +49,7 @@ int main(int argc,char** argv) {
     exit(-1);
   }
 
-  while (counter < 2) {
+  while (++counter < 2) {
     data = v4l_next(vhandle);
     
     if (data == 0) {

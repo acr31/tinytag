@@ -88,10 +88,10 @@ void adaptive_threshold(unsigned char* image) {
   unsigned char* data_pointer;
   int current_thresh, pixel, i,j;
 
-  int previous_line[IMAGE_WIDTH]={0};  // intentionally uninitialised
-  //  for(i=0;i<IMAGE_WIDTH;++i) { previous_line[i] = 127; }
+  int previous_line[IMAGE_WIDTH]={0};  /* intentionally uninitialised */
+  /*  for(i=0;i<IMAGE_WIDTH;++i) { previous_line[i] = 127; } */
   
-  for(i=0;i<IMAGE_HEIGHT-1;) { // use height-1 so we dont overrun the image if its height is an odd number
+  for(i=0;i<IMAGE_HEIGHT-1;) { /* use height-1 so we dont overrun the image if its height is an odd number */
     data_pointer = image + IMAGE_BYTES_PER_LINE * i;
     for(j=0;j<IMAGE_WIDTH;++j) {
       pixel = *data_pointer;
@@ -156,9 +156,9 @@ static int ywindow[1<<LOG_CURVATURE_WINDOW];
 enum curvature_result_t check_curvature(long long* previous_curvature_fp, long long* current_max_curvature_fp, int length) {
   enum curvature_result_t result = NOCORNER;
 
-  // end_index is the point we've just written (youngest pt in sliding window)
-  // index is the candidate corner (middle of sliding window)
-  // start_index is the oldest point in the sliding window
+  /* end_index is the point we've just written (youngest pt in sliding
+   window) index is the candidate corner (middle of sliding window)
+   start_index is the oldest point in the sliding window */
 
   const int end_index = MASK(length);
   const int index = MASK(length+(1<<(LOG_CURVATURE_WINDOW-1)));
@@ -174,7 +174,7 @@ enum curvature_result_t check_curvature(long long* previous_curvature_fp, long l
   const float curvature = moda == 0 || modb == 0 ? 0 : -(ax*bx+ay*by)*(ax*bx+ay*by)/moda/modb;
   */
 
-  // and, here's the fixed point version:
+  /* and, here's the fixed point version: */
 
   const int moda_i = ax*ax+ay*ay;
   const int modb_i = bx*bx+by*by;
@@ -185,10 +185,10 @@ enum curvature_result_t check_curvature(long long* previous_curvature_fp, long l
   if (moda_i==0 || modb_i==0) curvature_fp=0;
   else curvature_fp = (numerator_fp<<FRAC_BITS) / denominator_fp;
 
-  // printf("numerator_fp = %lld, denominator_fp = %lld, curvature_fp = %lld\n",numerator_fp,denominator_fp,curvature_fp); 
+  /* printf("numerator_fp = %lld, denominator_fp = %lld, curvature_fp = %lld\n",numerator_fp,denominator_fp,curvature_fp);  
 
-  // printf("index=%d, end_index=%d, start_index=%d\n",index,end_index,start_index);
-  // printf("ax=%i ay=%i bx=%i by=%i moda=%f modb=%f curvature=%f\n",ax,ay,bx,by,moda,modb,curvature);
+  printf("index=%d, end_index=%d, start_index=%d\n",index,end_index,start_index);
+  printf("ax=%i ay=%i bx=%i by=%i moda=%f modb=%f curvature=%f\n",ax,ay,bx,by,moda,modb,curvature); */
 
   if (curvature_fp > COS_CURVATURE_THRESHOLD_FP) {
     if (*previous_curvature_fp < COS_CURVATURE_THRESHOLD_FP) {
@@ -304,8 +304,8 @@ static int walk_contour(unsigned char* data_pointer, struct Point* result, int o
 	      ++corner_counter;
 	    }
 	    else if (curvature_result == CORNER) {
-	      // the candidate corner is half-way back through sliding window!
-	      // must correct for this...
+	      /* the candidate corner is half-way back through sliding window!
+		 must correct for this... */
 
 	      const int index = MASK(length+(1<<(LOG_CURVATURE_WINDOW-1)));
 	      result[corner_counter].x = xwindow[index];
@@ -400,17 +400,17 @@ int findquad(unsigned char* image, int* raster_x, int* raster_y, struct Point* p
 
   for(;*raster_y < IMAGE_HEIGHT; ++(*raster_y)) {
     data_pointer = image + IMAGE_BYTES_PER_LINE * (*raster_y);
-    ++data_pointer; // exclude the first pixel on the line
+    ++data_pointer; /* exclude the first pixel on the line */
     ++(*raster_x);
     for(;*raster_x < IMAGE_WIDTH-1;++(*raster_x), ++data_pointer) {
-      if (*data_pointer) {  // this pixel is a 1-element or it has been visited before
-	seen_before = *data_pointer & 2;   // this will be true if we've seen this pixel before
+      if (*data_pointer) {  /* this pixel is a 1-element or it has been visited before */
+	seen_before = *data_pointer & 2;   /* this will be true if we've seen this pixel before */
 	previous_is_1 = *(data_pointer-1);
 	next_is_1 = *(data_pointer+1);
 	if (!seen_before && !previous_is_1) {
 	  if (walk_contour(data_pointer,point,1,*raster_x,*raster_y)) {
 #ifdef IMAGE_DEBUG
-	    // plot new corners
+	    /* plot new corners */
 	    int i;
 	    for(i=0;i<4;i++) corner_image_debug[point[i].x + IMAGE_BYTES_PER_LINE * point[i].y] = 255;
 
@@ -423,7 +423,7 @@ int findquad(unsigned char* image, int* raster_x, int* raster_y, struct Point* p
 	  }
 	}
 	if (!seen_before && !next_is_1) {
-	  walk_contour(data_pointer,point,0,*raster_x,*raster_y); // can't return true
+	  walk_contour(data_pointer,point,0,*raster_x,*raster_y); /* can't return true */
 	}
       }
     }
@@ -569,7 +569,7 @@ void sample_code(unsigned char* image, char sampledcode[EDGE_CELLS*EDGE_CELLS], 
       int sample_x = bits_edge_xs[j];
       int sample_y = bits_edge_ys[j];
       sampledcode[read_order[pointer++]] = (image[sample_x + IMAGE_BYTES_PER_LINE*sample_y]) & 1;
-      //      printf("Wrote %d into %d position %d\n", (image[sample_x + IMAGE_BYTES_PER_LINE*sample_y]) & 1, read_order[pointer-1],pointer-1);
+      /*     printf("Wrote %d into %d position %d\n", (image[sample_x + IMAGE_BYTES_PER_LINE*sample_y]) & 1, read_order[pointer-1],pointer-1); */
 #ifdef IMAGE_DEBUG
       sample_image_debug[sample_x + IMAGE_BYTES_PER_LINE*sample_y] = 255;
 #endif      
@@ -597,7 +597,7 @@ int check_checksum(int quadrant, const char sampledcode[EDGE_CELLS*EDGE_CELLS]) 
 }
 #else
 int check_checksum(int quadrant, const char sampledcode[EDGE_CELLS*EDGE_CELLS]) {
-  //  printf("Checking %d\n",quadrant);
+  /*  printf("Checking %d\n",quadrant); */
   int accumulator = 0;
   int i;
   for(i=0;i<QUADRANT_SIZE-CHECKSUM_BITS;++i) {
@@ -660,13 +660,13 @@ int process_image(unsigned char* data, unsigned char code[PAYLOAD_SIZE_BYTES], i
   struct Point quad[4];
   char samplebuffer[EDGE_CELLS*EDGE_CELLS] = {0};
 
-  // This could be written in as a constant if floats are not supported at all!
+  /* This could be written in as a constant if floats are not supported at all! */
   COS_CURVATURE_THRESHOLD_FP = (long long) (0.64*((float)(1<<FRAC_BITS)));
 #ifdef TEXT_DEBUG
   printf("COS_CURVATURE_THRESHOLD = %lld\n",COS_CURVATURE_THRESHOLD_FP);
 #endif
 
-  // COS_CURVATURE_THRESHOLD_FP = 41943LL;
+  /* COS_CURVATURE_THRESHOLD_FP = 41943LL; */
 
 #ifdef TEXT_DEBUG
   printf("Thresholding... ");
@@ -716,14 +716,14 @@ int process_image(unsigned char* data, unsigned char code[PAYLOAD_SIZE_BYTES], i
       
       tracked_tag = 0;
 
-      // if bounding_box is too small to be a tag then go onto the next one...
+      /* if bounding_box is too small to be a tag then go onto the next one...*/
       if (bounding_box_area < MIN_TAG_BOUNDING_BOX_AREA) continue;
 
-      // if bounding box similar to tracked bbox then update tracked bbox
+      /* if bounding box similar to tracked bbox then update tracked bbox */
       int diffs = abs(bbox_top_left.x - bounding_minx) + abs(bbox_top_left.y - bounding_miny)
 	+ abs(bbox_bottom_right.x - bounding_maxx) + abs(bbox_bottom_right.y - bounding_maxy);
 
-      int diff_threshold = 8 * 4; // 8 pixels out for all 4 corners...
+      int diff_threshold = 8 * 4; /* 8 pixels out for all 4 corners... */
       if (diffs < diff_threshold) {
 	bbox_top_left.x = bounding_minx;
 	bbox_top_left.y = bounding_miny;
@@ -749,7 +749,7 @@ int process_image(unsigned char* data, unsigned char code[PAYLOAD_SIZE_BYTES], i
 #endif      
 
       if (i) {
-	// update tracked bounding box with actual tag sighting
+	/* update tracked bounding box with actual tag sighting */
 
 	bbox_top_left.x = bounding_minx;
 	bbox_top_left.y = bounding_miny;

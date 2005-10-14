@@ -27,15 +27,15 @@
 #include <sys/ioctl.h>
 
 
-// A little helpfer function for saving raw images:
+/* A little helper function for saving raw images: */
 
 void save_file(char* prefix,int i,char* frame,int framesize) {
   char outfilename[256];
   snprintf(outfilename,256,"%s-%d",prefix,i);
-  // printf("Trying to write: %s\n", outfilename);
+  /* printf("Trying to write: %s\n", outfilename); */
   
   int out_handle = open(outfilename,O_RDWR | O_CREAT);
-  // printf("out_handle = %d\n",out_handle);
+  /* printf("out_handle = %d\n",out_handle); */
   write(out_handle, frame, framesize);
   close(out_handle);
 }

@@ -21,14 +21,14 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/types.h>  // for open()
-#include <sys/stat.h>   // for open()
-#include <fcntl.h>      // for open()
-#include <sys/ioctl.h>  // for ioctl()
-#include <unistd.h>     // for mmap()
-#include <sys/mman.h>   // for mmap()
+#include <sys/types.h>  /* for open() */
+#include <sys/stat.h>   /* for open()*/
+#include <fcntl.h>      /* for open()*/
+#include <sys/ioctl.h>  /* for ioctl()*/
+#include <unistd.h>     /* for mmap()*/
+#include <sys/mman.h>   /* for mmap()*/
 #include <errno.h>
-#include <string.h> // for memcpy()
+#include <string.h> /* for memcpy()*/
 #include "v4l.h"
 #include "options.h"
 
@@ -101,10 +101,10 @@ struct v4l_handle* v4l_open(const char* videodev) {
     handle->slots[i].frame = i;
     handle->slots[i].width = handle->image_width;
     handle->slots[i].height = handle->image_height;
-    // start the device asynchronously fetching the frame
+    /* start the device asynchronously fetching the frame*/
     if (i>0) { 
-      // dont start capturing for the first one because we'll start it
-      // when we first call next
+      /* dont start capturing for the first one because we'll start it*/
+      /* when we first call next*/
       if (ioctl(handle->filehandle,VIDIOCMCAPTURE,&(handle->slots[i])) < 0) {
 	v4l_close(handle);
 	return 0;
@@ -136,7 +136,7 @@ unsigned char* v4l_next(struct v4l_handle* handle) {
   ++(handle->current_frame);
   handle->current_frame%=handle->mbuf.frames;
  
-  // collect the next image - block until it's there
+  /* collect the next image - block until it's there*/
   while( (ioctl_result = ioctl(handle->filehandle,VIDIOCSYNC,&(handle->slots[handle->current_frame].frame))) == EINTR);
   if (ioctl_result < 0) {
     return 0;

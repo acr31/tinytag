@@ -55,7 +55,7 @@ int main(int argc,char** argv) {
   }
   printf("\n");
 
-  // Save encoded tag:
+  /* Save encoded tag: */
   printf("Saving encoded image into encoded-tag.pnm...");
   save_image(image, "encoded-tag.pnm", 0);
   printf("  [DONE]\n");

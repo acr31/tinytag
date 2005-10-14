@@ -149,18 +149,4 @@ void populate_read_order(int* read_order) {
     read_order[ EDGE_CELLS - 1 - mod + (EDGE_CELLS - 1 - div) * EDGE_CELLS ] = i+2*QUADRANT_SIZE;
     read_order[ (EDGE_CELLS - 1 - mod) * EDGE_CELLS + div ] = i+3*QUADRANT_SIZE;
   }
-
-  /* if we have an odd number of cells along the edge of the tag then
-   * the very middle cell is not used.  Therefore we will only read
-   * EDGE_CELLS*EDGE_CELLS -1 bits from this tag.  However, we need to
-   * make sure that the sampling code does not read the middle cell -
-   * we do this by pointing the result of the middle cell at the very
-   * end of the array - which we subsequently ignore.  If this check
-   * was not here then we would leave the middle point of the
-   * read_order array uninitialised and thus write the sampled value
-   * to some arbitrary point in memory.
-   */
-  if ((EDGE_CELLS & 1) == 1) {
-    read_order[(EDGE_CELLS*EDGE_CELLS)>>1] = EDGE_CELLS*EDGE_CELLS;
-  }
 }

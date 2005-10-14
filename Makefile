@@ -1,7 +1,7 @@
 CPPFLAGS=
 LDFLAGS=
 LIBS=-lm
-CFLAGS=-Wall -W
+CFLAGS=-Wall -O3
 IMAGE=image.o
 
 # comment these out if you don't want ImageMagick support

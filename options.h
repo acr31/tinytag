@@ -32,21 +32,23 @@
 
 #define GLOBAL_THRESHOLD 42
 
-// Fixed point stuff
+/* Fixed point stuff */
 #define FRAC_BITS 16
 
 #define LOG_CURVATURE_WINDOW 6
 
 
-#define IMAGE_WIDTH 240
-#define IMAGE_HEIGHT 180
-#define IMAGE_BYTES_PER_LINE 240
+#define IMAGE_WIDTH 640
+#define IMAGE_HEIGHT 480
+#define IMAGE_BYTES_PER_LINE 640
 
 
 #define PAYLOAD_SIZE (EDGE_CELLS*EDGE_CELLS)
 #define PAYLOAD_SIZE_BYTES (PAYLOAD_SIZE>>3)
 #define QUADRANT_SIZE ((EDGE_CELLS*EDGE_CELLS)>>2)
 
-// #define IMAGE_DEBUG
-// #define TEXT_DEBUG
+/*
+#define IMAGE_DEBUG
+#define TEXT_DEBUG
+*/
 #define DISPLAY_CODE
