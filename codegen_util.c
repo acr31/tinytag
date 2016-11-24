@@ -29,11 +29,11 @@
  * Write the correct checksum for this quadrant in to the code
  */
 #ifdef USE_CRC
-void write_checksum(int quadrant, char sampledcode[EDGE_CELLS*EDGE_CELLS]) {
+void write_checksum(int quadrant, unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS]) {
   computecrc(sampledcode+QUADRANT_SIZE*quadrant,QUADRANT_SIZE,0);
 }
 #else
-void write_checksum(int quadrant, char sampledcode[EDGE_CELLS*EDGE_CELLS]) {
+void write_checksum(int quadrant, unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS]) {
   int accumulator = 0;
   int i;
   for(i=0;i<QUADRANT_SIZE-CHECKSUM_BITS;++i) {
@@ -50,7 +50,7 @@ void write_checksum(int quadrant, char sampledcode[EDGE_CELLS*EDGE_CELLS]) {
 /*
  *  Encode data into the writecode string
  */
-void encode(const char data[PAYLOAD_SIZE_BYTES], char writecode[EDGE_CELLS*EDGE_CELLS]) {
+void encode(const unsigned char data[PAYLOAD_SIZE_BYTES], unsigned char writecode[EDGE_CELLS*EDGE_CELLS]) {
   int i;
   int pointer = 0;
   int current = data[pointer++];
@@ -90,7 +90,7 @@ static void drawcell(unsigned char* image, int row, int col, int colour) {
   }
 }
 
-void draw(unsigned char* image, const char writecode[EDGE_CELLS*EDGE_CELLS],
+void draw(unsigned char* image, const unsigned char writecode[EDGE_CELLS*EDGE_CELLS],
 	  int* read_order) {
   int i;
   int j;

@@ -65,3 +65,29 @@ int computecrc(unsigned char message[], int nBits, int check) {
   return 1;
 }
 
+/*
+int main(int argc,char** argv) {
+
+  unsigned char message[9];
+
+  for(int c=0;c<64;++c) {
+ 
+    memset(message,0,9);
+    int t = c;
+    for(int i=5;i>=0;--i) {
+      message[i] = t & 0x1;
+      t >>= 1;
+    }
+
+    computecrc(message,9,0);
+
+    printf("%d\t",c);
+
+    for(int i=0;i<9;++i) {
+      printf("%d", message[i] & 0x1);
+    }
+    printf("\n");
+
+  }
+}
+*/

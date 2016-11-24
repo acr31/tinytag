@@ -34,12 +34,12 @@ enum curvature_result_t check_curvature(long long* previous_curvature_fp, long l
 int findquad(unsigned char* image, int* raster_x, int* raster_y, struct Point* point);
 
 
-void sample_code(unsigned char* image, char sampledcode[EDGE_CELLS*EDGE_CELLS], struct Point quadtangle[4], int* read_order);
+void sample_code(unsigned char* image, unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS], struct Point quadtangle[4], int* read_order);
 
-int check_checksum(int quadrant, const char sampledcode[EDGE_CELLS*EDGE_CELLS]);
-void write_checksum(int quadrant, char sampledcode[EDGE_CELLS*EDGE_CELLS]);
-int decode(const char sampledcode[EDGE_CELLS*EDGE_CELLS], char data[PAYLOAD_SIZE_BYTES]);
-void encode(const char data[PAYLOAD_SIZE_BYTES], char writecode[EDGE_CELLS*EDGE_CELLS]);
+int check_checksum(int quadrant, const unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS]);
+void write_checksum(int quadrant, unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS]);
+int decode(const unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS], unsigned char data[PAYLOAD_SIZE_BYTES]);
+void encode(const unsigned char data[PAYLOAD_SIZE_BYTES], char unsigned writecode[EDGE_CELLS*EDGE_CELLS]);
 void parse_code(char* text, unsigned char code[PAYLOAD_SIZE_BYTES]);
 
 int process_image(unsigned char* data, unsigned char code[PAYLOAD_SIZE_BYTES], int* read_order);

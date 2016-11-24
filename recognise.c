@@ -223,8 +223,8 @@ static unsigned char* sample_image_debug = NULL;
 static int walk_contour(unsigned char* data_pointer, struct Point* result, int outer_border, int currentx, int currenty) {
   int position = outer_border ? 0 : 4;
   int start_position = position;
-  unsigned char* contour_0;
-  unsigned char* contour_n; /* pointer so we know when to stop */
+  unsigned char* contour_0 = 0;
+  unsigned char* contour_n = 0; /* pointer so we know when to stop */
   unsigned char* sample_pointer;
   int cell4_is_0;
   int length;
@@ -526,7 +526,7 @@ static void incremental_linear_interpolation(int a, int b, int n, int* steps) {
 /*
  * Sample the points from the quadtangle.
  */
-void sample_code(unsigned char* image, char sampledcode[EDGE_CELLS*EDGE_CELLS], struct Point quadtangle[4],
+void sample_code(unsigned char* image, unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS], struct Point quadtangle[4],
 		 int* read_order) {
 #ifdef IMAGE_DEBUG
   int debug_counter;
@@ -589,14 +589,14 @@ void sample_code(unsigned char* image, char sampledcode[EDGE_CELLS*EDGE_CELLS], 
  * is systematic and so there is no need to do an explicit decode.
  */
 #ifdef USE_CRC
-int check_checksum(int quadrant, const char sampledcode[EDGE_CELLS*EDGE_CELLS]) {
+int check_checksum(int quadrant, const unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS]) {
   /* if we set check = 1 computecrc will not change the data so just
      cast away the const to remove the compiler warning */ 
-  char* nonconst = (char*)sampledcode; 
+  unsigned char* nonconst = (unsigned char*)sampledcode; 
   return computecrc(nonconst+QUADRANT_SIZE*quadrant,QUADRANT_SIZE,1);
 }
 #else
-int check_checksum(int quadrant, const char sampledcode[EDGE_CELLS*EDGE_CELLS]) {
+int check_checksum(int quadrant, const unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS]) {
   /*  printf("Checking %d\n",quadrant); */
   int accumulator = 0;
   int i;
@@ -616,7 +616,7 @@ int check_checksum(int quadrant, const char sampledcode[EDGE_CELLS*EDGE_CELLS]) 
  * Check all the quadrants and then pull out the data and pack it into
  * the result array. Return false if the checksum fails 
  */
-int decode(const char sampledcode[EDGE_CELLS*EDGE_CELLS], char data[PAYLOAD_SIZE_BYTES]) {
+int decode(const unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS], unsigned char data[PAYLOAD_SIZE_BYTES]) {
   int i;
   int j;
   int start_quad = -1;
@@ -658,7 +658,7 @@ int process_image(unsigned char* data, unsigned char code[PAYLOAD_SIZE_BYTES], i
   int bounding_maxx;
   int bounding_maxy;
   struct Point quad[4];
-  char samplebuffer[EDGE_CELLS*EDGE_CELLS] = {0};
+  unsigned char samplebuffer[EDGE_CELLS*EDGE_CELLS] = {0};
 
   /* This could be written in as a constant if floats are not supported at all! */
   COS_CURVATURE_THRESHOLD_FP = (long long) (0.64*((float)(1<<FRAC_BITS)));
@@ -776,5 +776,3 @@ int process_image(unsigned char* data, unsigned char code[PAYLOAD_SIZE_BYTES], i
   }
   return 0;
 }
-
-

@@ -23,7 +23,7 @@
 
 
 #define USE_CRC
-#define CHECKSUM_BITS 8
+#define CHECKSUM_BITS 3
 
 #define MIN_TAG_BOUNDING_BOX_AREA (80*80)
 

@@ -21,8 +21,8 @@
 
 #include "options.h"
 
-void write_checksum(int quadrant, char sampledcode[EDGE_CELLS*EDGE_CELLS]);
-void encode(const char data[PAYLOAD_SIZE_BYTES], char writecode[EDGE_CELLS*EDGE_CELLS]);
-void draw(unsigned char* image, const char writecode[EDGE_CELLS*EDGE_CELLS], int* read_order);
+void write_checksum(int quadrant, unsigned char sampledcode[EDGE_CELLS*EDGE_CELLS]);
+void encode(const unsigned char data[PAYLOAD_SIZE_BYTES], unsigned char writecode[EDGE_CELLS*EDGE_CELLS]);
+void draw(unsigned char* image, const unsigned char writecode[EDGE_CELLS*EDGE_CELLS], int* read_order);
 void parse_code(char* text, unsigned char code[PAYLOAD_SIZE_BYTES]);
 void populate_read_order(int* read_order);

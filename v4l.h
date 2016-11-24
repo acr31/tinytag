@@ -19,7 +19,7 @@
  * Email: acr31@cam.ac.uk
  */
 
-#include <linux/videodev.h> /* for Video4Linux*/
+#include <libv4l1-videodev.h> /* for Video4Linux*/
 
 struct v4l_handle {
   int filehandle;
